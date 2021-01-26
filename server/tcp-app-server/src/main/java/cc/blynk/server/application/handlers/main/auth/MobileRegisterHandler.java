@@ -21,7 +21,7 @@ import static cc.blynk.server.internal.CommonByteBufUtil.alreadyRegistered;
 import static cc.blynk.server.internal.CommonByteBufUtil.illegalCommand;
 import static cc.blynk.server.internal.CommonByteBufUtil.notAllowed;
 import static cc.blynk.server.internal.CommonByteBufUtil.ok;
-
+import java.io.File;
 /**
  * Process register message.
  * Divides input string by nil char on 3 parts:
@@ -78,6 +78,13 @@ public class MobileRegisterHandler extends SimpleChannelInboundHandler<RegisterM
         String passHash = messageParts[1];
         String appName = messageParts[2];
         log.info("Trying register user : {}, app : {}", email, appName);
+
+        File canReg = new File("/var/blynk_reg_allowed");
+        if (!canReg.exists()) {
+            log.error("Registration disabled. {}", message);
+            ctx.writeAndFlush(notAllowed(message.id), ctx.voidPromise());
+            return;
+        }
 
         if (BlynkEmailValidator.isNotValidEmail(email)) {
             log.error("Register Handler. Wrong email: {}", email);

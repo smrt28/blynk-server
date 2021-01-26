@@ -6,10 +6,10 @@ import cc.blynk.server.application.handlers.main.MobileResetPasswordHandler;
 import cc.blynk.server.application.handlers.sharing.auth.MobileShareLoginHandler;
 import cc.blynk.server.common.handlers.UserNotLoggedHandler;
 import cc.blynk.server.core.model.DashBoard;
-import cc.blynk.server.core.model.auth.FacebookTokenResponse;
+//import cc.blynk.server.core.model.auth.FacebookTokenResponse;
 import cc.blynk.server.core.model.auth.Session;
 import cc.blynk.server.core.model.auth.User;
-import cc.blynk.server.core.model.serialization.JsonParser;
+//import cc.blynk.server.core.model.serialization.JsonParser;
 import cc.blynk.server.core.protocol.model.messages.appllication.LoginMessage;
 import cc.blynk.server.internal.ReregisterChannelUtil;
 import cc.blynk.utils.AppNameUtil;
@@ -21,9 +21,9 @@ import io.netty.channel.DefaultChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.asynchttpclient.AsyncCompletionHandler;
+//import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.DefaultAsyncHttpClient;
-import org.asynchttpclient.Response;
+//import org.asynchttpclient.Response;
 
 import static cc.blynk.server.core.protocol.enums.Command.BLYNK_INTERNAL;
 import static cc.blynk.server.core.protocol.enums.Command.OUTDATED_APP_NOTIFICATION;
@@ -91,7 +91,10 @@ public class MobileLoginHandler extends SimpleChannelInboundHandler<LoginMessage
 
         if (messageParts.length == 5) {
             if (AppNameUtil.FACEBOOK.equals(messageParts[4])) {
-                facebookLogin(ctx, message.id, email, messageParts[1], version);
+                log.error("Facebook users not allowed.");
+                ctx.writeAndFlush(notAllowed(message.id), ctx.voidPromise());
+                return;
+ //               facebookLogin(ctx, message.id, email, messageParts[1], version);
             } else {
                 String appName = messageParts[4];
                 blynkLogin(ctx, message.id, email, messageParts[1], version, appName);
@@ -101,7 +104,7 @@ public class MobileLoginHandler extends SimpleChannelInboundHandler<LoginMessage
             blynkLogin(ctx, message.id, email, messageParts[1], version, AppNameUtil.BLYNK);
         }
     }
-
+/*
     private void facebookLogin(ChannelHandlerContext ctx, int messageId, String email,
                                String token, Version version) {
         asyncHttpClient.prepareGet(URL + token)
@@ -148,7 +151,7 @@ public class MobileLoginHandler extends SimpleChannelInboundHandler<LoginMessage
                     }
                 });
     }
-
+*/
     private void blynkLogin(ChannelHandlerContext ctx, int msgId, String email, String pass,
                             Version version, String appName) {
         var user = holder.userDao.getByName(email, appName);
