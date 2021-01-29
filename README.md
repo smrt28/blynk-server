@@ -1,3 +1,6 @@
+# Run it by
+java -jar ./server-0.41.16-SNAPSHOT.jar -dataFolder /home/smrt/blink/ -serverConfig ./sp.properties
+
 # Generate cert
 openssl genrsa -out server.key 2048
 openssl req -new -out server.csr -key server.key
