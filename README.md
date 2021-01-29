@@ -1,3 +1,9 @@
+# Generate cert
+openssl genrsa -out server.key 2048
+openssl req -new -out server.csr -key server.key
+openssl pkcs8 -topk8 -v1 PBE-SHA1-2DES -in server.key -out server.pem
+
+
 # What is Blynk?
 Blynk is a platform with iOS and Android apps to control Arduino, ESP8266, Raspberry Pi and the likes over the Internet.  
 You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets.
