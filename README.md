@@ -1,5 +1,5 @@
-* The original blynk server forces you to have the cert signed by the trusted authority (Let's Encrypt). I removed this stupid code.
-* Also, in this version I made it possible to disable the new user registration.
+* The original blynk server forces you to have the cert signed by the trusted authority (Let's Encrypt). I removed this stupid code and you can now use the self-signed cert only.
+* Also, I made it possible to disable the new user registration.
 
 # Run it by
         java -jar ./server-0.41.16-SNAPSHOT.jar -dataFolder /home/smrt/blink/ -serverConfig ./sp.properties
