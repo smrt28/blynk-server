@@ -1,10 +1,13 @@
+* The original blynk server forces you to have the cert signed by the trusted authority (Let's Encrypt). I removed this stupid code.
+* Also, in this version I made it possible to disable the new user registration.
+
 # Run it by
-java -jar ./server-0.41.16-SNAPSHOT.jar -dataFolder /home/smrt/blink/ -serverConfig ./sp.properties
+        java -jar ./server-0.41.16-SNAPSHOT.jar -dataFolder /home/smrt/blink/ -serverConfig ./sp.properties
 
 # Generate cert
-openssl genrsa -out server.key 2048
-openssl req -new -out server.csr -key server.key
-openssl pkcs8 -topk8 -v1 PBE-SHA1-2DES -in server.key -out server.pem
+        openssl genrsa -out server.key 2048
+        openssl req -new -out server.csr -key server.key
+        openssl pkcs8 -topk8 -v1 PBE-SHA1-2DES -in server.key -out server.pem
 
 
 # What is Blynk?
